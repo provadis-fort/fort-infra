@@ -17,6 +17,10 @@ Danach ist Keycloak lokal unter folgender Adresse erreichbar:
 http://localhost:9000
 ```
 
+Zum Einloggen in das Adminpanel:
+* **Nutzername:** ``admin``
+* **Passwort:** ``admin``
+
 ## 2. Realm anlegen
 
 1. Keycloak im Browser öffnen: `http://localhost:9000`
@@ -78,6 +82,11 @@ http://localhost:8084/login/oauth2/code/fort
 http://localhost:8084
 ```
 
+Für Kompatibilität mit dem Frontend zusätzlich:
+```text
+http://localhost:5173/login
+```
+
 **Web Origins**
 
 Für lokales Testen:
@@ -96,7 +105,25 @@ http://localhost:5173
 
 1. Im angelegten Client auf **Credentials** gehen
 2. Das **Client Secret** kopieren
-3. In die `.env`-Datei des Projekts einfügen
+3. In die `.env`-Datei des BFFs einfügen
+
+### Für IntelliJ-Nutzer:
+In manchen Fällen erkennt IntelliJ die ``.env``-Datei nicht korrekt, was zu einem falschen oder fehlenden Secret führt, sodass der Login fehlschlägt.
+
+Als Lösung lässt sich das Secret direkt in der Spring-Konfiguration des BFFs in IntelliJ setzten:
+
+1. Klicke unter "Run" auf die Option "Edit Configurations...".
+![](assets/img.png)
+
+2. Wähle in der linken Seitenleiste unter "Spring Boot" die Konfiguration "FortBffApplication".
+![](assets/img_1.png)
+
+3. Ggf. muss unter "Modify Options" die Sichtbarkeit der Option "Environment Variables" aktiviert werden.
+![](assets/img_2.png)
+
+4. Das Secret lässt sich in das neue Feld einfügen: ```OIDC_CLIENT_SECRET=dein-secret-hier```
+![](assets/img_3.png)
+
 
 ## 6. Testbenutzer anlegen
 
@@ -134,6 +161,8 @@ http://localhost:8084/logout
 ## 9. Wichtiger Hinweis zu IntelliJ und `.env`
 
 Unbedingt sicherstellen, dass IntelliJ wirklich die richtige `.env`-Datei verwendet.
+
+Für einen möglichen Lösungsansatz siehe: [5. Client Secret kopieren -> Für IntelliJ-Nutzer](#Für-IntelliJ-Nutzer)
 
 Gerade bei Login- oder Logout-Problemen liegt die Ursache oft daran, dass:
 
