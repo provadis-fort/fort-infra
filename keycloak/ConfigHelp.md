@@ -124,6 +124,12 @@ Als Lösung lässt sich das Secret direkt in der Spring-Konfiguration des BFFs i
 4. Das Secret lässt sich in das neue Feld einfügen: ```OIDC_CLIENT_SECRET=dein-secret-hier```
 ![](assets/img_3.png)
 
+### Für Nutzer in einem Linux Terminal:
+1. ```$ set -a```
+
+2. ```$ source .env```
+
+3. ```$ set +a```
 
 ## 6. Testbenutzer anlegen
 
