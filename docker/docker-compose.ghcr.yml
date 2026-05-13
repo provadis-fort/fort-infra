@@ -1,0 +1,60 @@
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "9000:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    restart: unless-stopped
+
+  fort-lecture-api:
+    image: ghcr.io/hfgd123/fort-lecture-api:latest
+    container_name: fort-lecture-api
+    network_mode: host
+    restart: unless-stopped
+
+  fort-instructor-api:
+    image: ghcr.io/hfgd123/fort-instructor-api:latest
+    container_name: fort-instructor-api
+    network_mode: host
+    restart: unless-stopped
+
+  fort-asssignment-api:
+    image: ghcr.io/hfgd123/fort-asssignment-api:latest
+    container_name: fort-asssignment-api
+    network_mode: host
+    restart: unless-stopped
+
+  fort-bff:
+    image: ghcr.io/hfgd123/fort-bff:latest
+    container_name: fort-bff
+    network_mode: host
+    env_file:
+      - ./fort-bff.env
+    environment:
+      UI_BASE_URL: http://localhost:8083
+    restart: unless-stopped
+    depends_on:
+      - keycloak
+      - fort-lecture-api
+      - fort-instructor-api
+      - fort-asssignment-api
+
+  fort-ui:
+    image: ghcr.io/hfgd123/fort-ui:latest
+    container_name: fort-ui
+    ports:
+      - "8083:80"
+    restart: unless-stopped
+    depends_on:
+      - fort-bff
+
+volumes:
+  keycloak_data:
+
