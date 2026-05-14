@@ -4,16 +4,7 @@ Diese Anleitung beschreibt die lokale Einrichtung von Keycloak für das Projekt 
 
 ***
 
-## 1. Keycloak starten
-
-Im Projektverzeichnis ausführen:
-
-```bash
-cd fort-infra/keycloak
-docker compose up
-```
-
-Danach ist Keycloak lokal unter folgender Adresse erreichbar:
+## 1. Keycloak öffnen
 
 ```text
 http://localhost:9000
@@ -92,41 +83,34 @@ Folgende Werte eintragen:
 **Root URL**
 
 ```text
-http://localhost:8084
+http://localhost:8083
 ```
 
 **Home URL**
 
 ```text
-http://localhost:8084
+http://localhost:8083/home
 ```
 
 **Valid redirect URIs**
 
 ```text
-http://localhost:8084/login/oauth2/code/fort
+http://localhost:8084/*
+http://localhost:8083/*
 ```
 
 **Valid post logout redirect URIs**
 
 ```text
 http://localhost:8084
-http://localhost:5173/login
-http://localhost:5173/login-blocked
+http://localhost:8083/login
+http://localhost:8083/login-blocked
 ```
 
 **Web Origins**
 
-Für lokales Testen:
-
 ```text
-http://localhost:8084
-```
-
-Wenn ein separates Frontend verwendet wird, stattdessen den Frontend-Port eintragen, zum Beispiel:
-
-```text
-http://localhost:5173
+http://localhost:8083
 ```
 
 ***
@@ -135,7 +119,8 @@ http://localhost:5173
 
 1. Im angelegten Client auf **Credentials** gehen
 2. Das **Client Secret** kopieren
-3. In die `.env`-Datei des BFFs einfügen
+3. In die `fort-bff.env`-Datei als OIDC_CLIENT_SECRET  einfügen
+
 
 ### Für IntelliJ-Nutzer
 
@@ -157,15 +142,6 @@ Als Lösung lässt sich das Secret direkt in der Spring-Konfiguration des BFFs i
    ```text
    OIDC_CLIENT_SECRET=dein-secret-hier
    ```
-
-
-### Für Nutzer in einem Linux Terminal
-
-```bash
-$ set -a
-$ source .env
-$ set +a
-```
 
 ***
 
@@ -307,20 +283,6 @@ http://localhost:8084/logout
 
 ***
 
-## 13. Wichtiger Hinweis zu IntelliJ und `.env`
-
-Unbedingt sicherstellen, dass IntelliJ wirklich die richtige `.env`-Datei verwendet.
-
-Für einen möglichen Lösungsansatz siehe: [5. Client Secret kopieren → Für IntelliJ-Nutzer](#für-intellij-nutzer)
-
-Gerade bei Login- oder Logout-Problemen liegt die Ursache oft daran, dass:
-
-* die falsche `.env` geladen wird
-* das `client secret` nicht aktuell ist
-* die Anwendung ohne die erwarteten Environment-Variablen gestartet wurde
-
-***
-
 ## Kurzüberblick
 
 ### Keycloak
@@ -329,13 +291,14 @@ Gerade bei Login- oder Logout-Problemen liegt die Ursache oft daran, dass:
 - Client ID: `fort-bff`
 
 ### Anwendung
+- UI URL: `http://localhost:8083`
 - App URL: `http://localhost:8084`
 - Login: `http://localhost:8084/login`
 - Logout: `http://localhost:8084/logout`
 
 ### Redirects
 - Redirect URI: `http://localhost:8084/login/oauth2/code/fort`
-- Post Logout Redirect URIs: `http://localhost:8084`, `http://localhost:5173/login`, `http://localhost:5173/login-blocked`
+- Post Logout Redirect URIs: `http://localhost:8084`, `http://localhost:8083/login`, `http://localhost:8083/login-blocked`
 
 ### Rollen
 - `ADMIN` – Vollzugriff
