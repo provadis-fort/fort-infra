@@ -9,7 +9,6 @@
 
 - `docker-compose.yml` (zieht alle Images von GHCR)
 - fort-bff.env
-- Diese Anleitung
 
 ## Schritt-für-Schritt: Installation und Start
 
