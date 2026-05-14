@@ -7,12 +7,13 @@
 
 ## Dateien im Ordner /docker/
 
-- `docker-compose.yml` (zieht alle Images von GHCR)
-- fort-bff.env
+- `docker-compose.yml`
+- `fort-bff.env`
 
 ## Schritt-für-Schritt: Installation und Start
 
 0)Herunterladen
+
 Die folgenden Dateien müssen im gleichen Ordner liegen:
 - docker-comopose.yml
 - fort-bff.env
