@@ -5,7 +5,7 @@
 
 - Docker Engine und Docker Compose
 
-## Dateien in diesem Ordner
+## Dateien im Ordner /docker/
 
 - `docker-compose.yml` (zieht alle Images von GHCR)
 - fort-bff.env
